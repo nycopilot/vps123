@@ -155,51 +155,46 @@ while true; do
     2)
         clear
         print_jishnu_logo
-        print_centered_header "ðŸ”§ IDX TOOL SETUP" $R
+        print_status "ðŸ”§ IDX TOOL SETUP" "$R"
+        print_divider
+        echo
         
-        print_status "Preparing IDX Development Environment..." $Y
+        echo -e "${R}â•”â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•—${N}"
+        echo -e "${R}â•‘${W}              IDX DEVELOPMENT TOOL SETUP               ${R}â•‘${N}"
+        echo -e "${R}â•šâ•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•${N}\n"
         
-        # Cleanup (assuming 'vps123' is a working directory)
-        echo -e "${Y}ðŸ§¹ Attempting cleanup of old 'myapp' and 'flutter' folders...${N}"
-        # We need to ensure 'vps123' exists or navigate correctly
-        # Original code assumed 'cd vps123' would succeed, which is risky.
-        # It's safer to use absolute paths or a controlled environment.
-        # For simplicity, we'll keep the original's intent but warn:
+        echo -e "${Y}ðŸ§¹ Cleaning up old files...${N}"
+        cd
+        rm -rf myapp
+        rm -rf flutter
         
-        if [ ! -d "vps123" ]; then
-            echo -e "${Y}»» Directory 'vps123' not found. Assuming current directory.${N}"
-        fi
+        cd vps123
         
-        rm -rf myapp flutter
-        
-        IDX_DIR="vps123/.idx"
-        
-        if [ ! -d "$IDX_DIR" ]; then
-            echo -e "${G}ðŸ“ Creating IDX configuration directory: $IDX_DIR...${N}"
-            mkdir -p "$IDX_DIR"
+        if [ ! -d ".idx" ]; then
+            echo -e "${G}ðŸ“ Creating .idx directory...${N}"
+            mkdir .idx
+            cd .idx
             
-            # Create the dev.nix file
-            DEV_NIX_PATH="$IDX_DIR/dev.nix"
-            echo -e "${C}ðŸ“ Creating dev.nix configuration at ${DEV_NIX_PATH}...${N}"
+            echo -e "${C}ðŸ“ Creating dev.nix configuration...${N}"
+            echo -e "${Y}â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€${N}"
             
-            cat <<EOF > "$DEV_NIX_PATH"
+            cat <<EOF > dev.nix
 { pkgs, ... }: {
-  channel = "stable-24.05"; # NixOS Channel for stability
+  channel = "stable-24.05";
 
   packages = with pkgs; [
     unzip
     openssh
     git
-    qemu_kvm # QEMU for virtualization
+    qemu_kvm
     sudo
     cdrkit
     cloud-utils
     qemu
-    # Add other IDX/Nix essential packages here
   ];
 
   env = {
-    EDITOR = "nano"; # Default editor preference
+    EDITOR = "nano";
   };
 
   idx = {
@@ -209,32 +204,35 @@ while true; do
     ];
 
     workspace = {
-      # Placeholder for custom commands on creation/start
       onCreate = { };
       onStart = { };
     };
 
     previews = {
-      enable = false; # Disable web previews by default
+      enable = false;
     };
   };
 }
 EOF
             
-            print_status "âœ… IDX TOOL SETUP COMPLETE!" $G
-            
-            echo -e "${R}┌$(printf -- '─%.0s' {1..58})┐${N}"
-            echo -e "${R}│ ${W} ${G}Status${W}   : ${Y}Ready to use${W}                        ${R}│${N}"
-            echo -e "${R}│ ${W} ${G}Location${W} : ${Y}~/$IDX_DIR${W}                         ${R}│${N}"
-            echo -e "${R}│ ${W} ${G}Tool${W}     : ${Y}IDX Dev Environment${W}                 ${R}│${N}"
-            echo -e "${R}│ ${W} ${G}Version${W}  : ${Y}Stable 24.05${W}                        ${R}│${N}"
-            echo -e "${R}└$(printf -- '─%.0s' {1..58})┘${N}"
+            echo -e "${Y}â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€${N}"
+            echo -e "\n${G}âœ… IDX TOOL SETUP COMPLETE!${N}"
+            echo -e "${R}â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”${N}"
+            echo -e "${R}â”‚${W} ${G}Status${W}   : ${Y}Ready to use${W}                        ${R}â”‚${N}"
+            echo -e "${R}â”‚${W} ${G}Location${W} : ${Y}~/vps123/.idx${W}                       ${R}â”‚${N}"
+            echo -e "${R}â”‚${W} ${G}Tool${W}     : ${Y}IDX Development Environment${W}         ${R}â”‚${N}"
+            echo -e "${R}â”‚${W} ${G}Version${W}  : ${Y}Stable 24.05${W}                        ${R}â”‚${N}"
+            echo -e "${R}â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜${N}"
         else
-            print_status "âš  IDX Tool already setup â€” skipping." $Y
-            echo -e "${W}Location: ${Y}~/$IDX_DIR${N}"
+            echo -e "${R}â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”${N}"
+            echo -e "${R}â”‚${Y} âš  IDX Tool already setup â€” skipping.${W}               ${R}â”‚${N}"
+            echo -e "${R}â”‚${W} Location: ${Y}~/vps123/.idx${W}                          ${R}â”‚${N}"
+            echo -e "${R}â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜${N}"
         fi
         
-        read -p "Press Enter to return to main menu..."
+        echo -e "\n${R}â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•${N}"
+        echo -ne "${R}â–¶â–¶${W} Press Enter to return to main menu...${N}"
+        read -p ""
         ;;
     
     # =========================================================
