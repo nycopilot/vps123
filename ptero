@@ -306,9 +306,13 @@ while true; do
 
             wget -q https://github.com/mahimxyzz/Vps/raw/refs/heads/main/mcplugins.blueprint
 
+            wget -q https://github.com/mahimxyzz/Vps/raw/refs/heads/main/huxregister.blueprint
+
             blueprint -i mcplugins.blueprint && success "MC Plugins installed"
 
             blueprint -i minecraftplayermanager.blueprint && success "Player Manager installed"
+
+            blueprint -i huxregister.blueprint && success "huxregister installed"
 
             read -p $'\e[93mPress Enter to continue...\e[0m' -r
 
