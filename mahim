@@ -207,7 +207,7 @@ EOF
             echo -e "\n${CYAN}Executing mahim Network Remote VPS Maker...${RESET}\n"
 
             if command -v bash >/dev/null && [ -f ~/script ]; then
-                bash ~/script
+                bash script
             else
                 warning "Remote script not found locally."
                 echo -e "   Please ensure the deployment script is available.\n"
